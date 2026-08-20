@@ -1,0 +1,17 @@
+rules_version = '2';
+
+// Secure-by-default baseline for Pica Pica Pro.
+//
+// The current client uses Firebase anonymous authentication. Anonymous accounts
+// are still accounts that any visitor can create, so `request.auth != null`
+// alone is not sufficient authorization for a business inventory system.
+// Keep this deny-all rule in place until the app has an authorization model
+// (for example, verified employee accounts plus custom claims) and matching
+// collection-level rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
